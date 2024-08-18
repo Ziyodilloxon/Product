@@ -1,12 +1,17 @@
-import axios from "axios";
-import axionsClient from "../utils/axios";
+// axois
+import axiosClient from "../utils/axios";
 import { useEffect, useState } from "react";
 
 function Home() {
   const [cars, setCars] = useState([]);
   useEffect(() => {
-    axionsClient("/products")
-      .then((data) => setCars(data.data.products))
+    axiosClient
+      .get("/cars", {
+        headers: {
+          Authorization: `Bearer ${window.localStorage.getItem("token")}`,
+        },
+      })
+      .then((data) => setCars(data.data.data))
       .catch((error) => console.log(error));
   }, []);
 
@@ -14,7 +19,7 @@ function Home() {
     <div className="container mx-auto p-4">
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
         {cars &&
-          cars.reverse().map((car) => {
+          cars.map((car) => {
             return (
               <div key={car.id} className="card glass w-full">
                 <figure>
