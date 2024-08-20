@@ -12,7 +12,7 @@ const initialState = {
 
 export const checkUser = createAsyncThunk("user/checkUser", async () => {
   const user = await axiosClient.post("/auth/get-user", {
-    access_token: window.localStorage.getItem("token"),
+    access_token: window.localStorage.getItem("access_token"),
   });
 
   return user.data;
@@ -25,12 +25,12 @@ export const userSlice = createSlice({
     login: (state, { payload }) => {
       state.user = payload;
 
-      window.localStorage.setItem("token", payload.access_token);
+      window.localStorage.setItem("access_token", payload.access_token);
       window.localStorage.setItem("refresh_token", payload.refresh_token);
     },
     logout: (state) => {
       state.user = null;
-      window.localStorage.removeItem("token");
+      window.localStorage.removeItem("access_token");
       window.localStorage.removeItem("refresh_token");
     },
     setProducts: (state, { payload }) => {

@@ -5,15 +5,15 @@ export const axiosClient = axios.create({
   baseURL: mainURL,
 });
 
-axios.interceptors.request.use((config) => {
-  const token = window.localStorage.getItem("token");
+axiosClient.interceptors.request.use((config) => {
+  const token = window.localStorage.getItem("access_token");
   if (token) {
     config.headers.Authorization = `Bearer ${token}`;
   }
 
   return config;
 });
-axios.interceptors.response.use(
+axiosClient.interceptors.response.use(
   (response) => {
     return response;
   },
@@ -35,6 +35,8 @@ axios.interceptors.response.use(
       }
     } catch (error) {
       console.log(error.message);
+      window.localStorage.removeItem("refresh_token");
+      window.localStorage.removeItem("access_token");
     }
 
     return new Promise.reject(error);

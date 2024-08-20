@@ -55,7 +55,7 @@ function Login() {
             />
           </div>
           <button className="w-full bg-purple-600 text-white p-3 rounded-lg font-semibold hover:bg-purple-700 transition duration-300 ease-in-out">
-            Submit
+            Login
           </button>
         </form>
         <p className="text-center text-gray-600 mt-4">

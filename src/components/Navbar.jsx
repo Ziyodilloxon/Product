@@ -1,6 +1,12 @@
+// react redux
+import { useSelector } from "react-redux";
+
+// components
 import NavLinks from "./NavLinks";
 
 function Navbar() {
+  const { user } = useSelector((state) => state.user);
+
   return (
     <div className="navbar bg-base-100 site-container">
       <div className="flex-1">
@@ -12,12 +18,8 @@ function Navbar() {
         </ul>
       </div>
       <div className="flex-none gap-2">
-        <div className="form-control">
-          <input
-            type="text"
-            placeholder="Search"
-            className="input input-bordered w-24 md:w-auto"
-          />
+        <div>
+          <h2 className="text-2xl font-bold">{user.username}</h2>
         </div>
         <div className="dropdown dropdown-end">
           <div
@@ -25,10 +27,14 @@ function Navbar() {
             role="button"
             className="btn btn-ghost btn-circle avatar"
           >
-            <div className="w-10 rounded-full">
+            <div className="w-16 rounded-full">
               <img
-                alt="Tailwind CSS Navbar component"
-                src="https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.webp"
+                src={
+                  user.photoURL
+                    ? user.photoURL
+                    : `https://api.dicebear.com/9.x/initials/svg?seed=${user.displayName}`
+                }
+                alt={`${user.displayName ?? "user"} image`}
               />
             </div>
           </div>
